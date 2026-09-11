@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Talking Cat</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="state-idle">
+
+<div id="app">
+
+  <header id="topbar">
+    <button id="btn-settings" class="icon-btn" aria-label="Settings">&#9881;</button>
+    <div id="status" role="status" aria-live="polite">Tap TALK</div>
+    <button id="btn-refresh" class="icon-btn" aria-label="Refresh screen">&#8635;</button>
+  </header>
+
+  <main id="stage">
+    <!-- The cat. Tap zones are transparent rects layered over the art. -->
+    <svg id="cat" class="cat" viewBox="0 0 400 520" preserveAspectRatio="xMidYMid meet" aria-label="A cartoon cat"></svg>
+    <div id="bubble" hidden></div>
+  </main>
+
+  <div id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <footer id="controls">
+    <button id="btn-voice" class="pill" aria-label="Change voice">
+      <span class="pill-label">Voice</span>
+      <span class="pill-value" id="voice-name">Kitten</span>
+    </button>
+    <button id="btn-talk" class="big" aria-label="Talk to the cat">TALK</button>
+    <button id="btn-replay" class="pill" aria-label="Say it again" disabled>
+      <span class="pill-label">Again</span>
+      <span class="pill-value">&#9654;</span>
+    </button>
+  </footer>
+
+</div>
+
+<!-- Settings sheet -->
+<div id="sheet" hidden>
+  <div class="sheet-inner">
+    <h2>Settings</h2>
+
+    <label class="row">
+      <span>E Ink mode</span>
+      <input type="checkbox" id="opt-eink">
+    </label>
+    <p class="hint">Black &amp; white, slow frame rate, periodic full refresh. Turn off on a normal screen.</p>
+
+    <label class="row">
+      <span>Full refresh every</span>
+      <select id="opt-refresh">
+        <option value="0">Never</option>
+        <option value="8">8 changes</option>
+        <option value="16" selected>16 changes</option>
+        <option value="32">32 changes</option>
+      </select>
+    </label>
+    <p class="hint">Clears E Ink ghosting with a brief black flash.</p>
+
+    <label class="row">
+      <span>Listen time limit</span>
+      <select id="opt-maxrec">
+        <option value="4">4 seconds</option>
+        <option value="6" selected>6 seconds</option>
+        <option value="10">10 seconds</option>
+      </select>
+    </label>
+
+    <label class="row">
+      <span>Stop on silence</span>
+      <input type="checkbox" id="opt-vad" checked>
+    </label>
+    <p class="hint">Stops listening automatically after a moment of quiet.</p>
+
+    <label class="row">
+      <span>Keep screen awake</span>
+      <input type="checkbox" id="opt-wake" checked>
+    </label>
+
+    <div id="diag" class="hint"></div>
+
+    <button id="btn-close-sheet" class="big">Done</button>
+  </div>
+</div>
+
+<noscript><p style="padding:2rem;font:1.2rem system-ui">This toy needs JavaScript.</p></noscript>
+
+<script src="js/eink.js"></script>
+<script src="js/cat.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
